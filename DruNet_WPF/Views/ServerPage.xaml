@@ -1,0 +1,14 @@
+﻿<Page x:Class="DruNet_WPF.Views.ServerPage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:DruNet_WPF.Views"
+      mc:Ignorable="d" 
+      d:DesignHeight="300" d:DesignWidth="300"
+      Title="ServerPage">
+
+    <Grid>
+        <TextBlock>Strona serwera</TextBlock>
+    </Grid>
+</Page>
