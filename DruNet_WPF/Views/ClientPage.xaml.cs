@@ -12,6 +12,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using DruNet_WPF.Core;
 
 namespace DruNet_WPF.Views
 {
@@ -23,6 +24,12 @@ namespace DruNet_WPF.Views
         public ClientPage()
         {
             InitializeComponent();
+            //ApplicationLogicInitializer.ClientRun();
+        }
+
+        public void AddOutput(string output)
+        {
+            OutputTb.Text += output;
         }
     }
 }

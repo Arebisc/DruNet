@@ -65,6 +65,7 @@
     </ApplicationDefinition>
     <Compile Include="Core\ApplicationLogicInitializer.cs" />
     <Compile Include="Core\Client.cs" />
+    <Compile Include="Core\LogicDelegates.cs" />
     <Compile Include="Core\Server.cs" />
     <Compile Include="Views\ClientPage.xaml.cs">
       <DependentUpon>ClientPage.xaml</DependentUpon>

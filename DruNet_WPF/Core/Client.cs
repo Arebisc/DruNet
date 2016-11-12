@@ -13,19 +13,21 @@ namespace DruNet_WPF.Core
         private NetworkStream stream;
         private List<byte> message;
 
+        public AddOutput ClientOutput;
 
         public Client()
         {
             try
             {
-                this.ClientSocket = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
+                ClientSocket = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
                 IPEndPoint endPoint = new IPEndPoint(IPAddress.Parse("127.0.0.1"), 1995);
                 ClientSocket.Connect(endPoint);
                 stream = new NetworkStream(ClientSocket);
                 message = new List<byte>();
+
                 if (ClientSocket.Connected)
                 {
-                    Console.WriteLine("Polaczono z serwerem");
+                    Console.WriteLine("Połączono z serwerem");
                 }
             }
             catch (SocketException a)
@@ -38,6 +40,7 @@ namespace DruNet_WPF.Core
         {
             Buffer = Encoding.Default.GetBytes(msg);
             message.Add(flaga);
+
             for (int i = 0; i < 31; i++)
             {
                 if (i < Buffer.Length)

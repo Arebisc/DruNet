@@ -9,7 +9,7 @@ namespace DruNet_WPF.Core
 {
     class ApplicationLogicInitializer
     {
-        public void ClientRun()
+        public static void ClientRun()
         {
             Client client = new Client();
 
@@ -20,7 +20,7 @@ namespace DruNet_WPF.Core
             }
         }
 
-        public void ServerRun()
+        public static void ServerRun()
         {
             Server server = new Server();
 

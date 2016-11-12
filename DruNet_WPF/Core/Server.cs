@@ -16,6 +16,7 @@ namespace DruNet_WPF.Core
         private List<byte> package;
         private string data;
 
+        public AddOutput ClientOutput;
 
         public Server()
         {
@@ -41,10 +42,10 @@ namespace DruNet_WPF.Core
                 }
             }
 
-            Convert();
+            ConvertReceivedData();
         }
        
-        public void Convert()
+        public void ConvertReceivedData()
         {
             Buffer = new byte[32];
 
@@ -68,7 +69,7 @@ namespace DruNet_WPF.Core
         {
             package.Clear();
             Console.WriteLine("Request Login");
-            if (data.Equals("root"))
+            if (data == "root")
             {
                 Console.WriteLine("Login accepted");
             }

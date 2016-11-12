@@ -9,6 +9,18 @@
       Title="ClientPage">
 
     <Grid>
-        <TextBlock>Strona klienta</TextBlock>
+        <StackPanel Orientation="Vertical">
+            <StackPanel Orientation="Horizontal" VerticalAlignment="Top" HorizontalAlignment="Center">
+                <TextBlock FontSize="22" FontFamily="Viner Hand ITC" FontWeight="Bold">Klient</TextBlock>
+            </StackPanel>
+            <StackPanel>
+                <Label>Command Line</Label>
+                <TextBox Name="CommandLineTb" Height="100"></TextBox>
+            </StackPanel>
+            <StackPanel>
+                <Label>Output</Label>
+                <TextBlock Height="100" Name="OutputTb"></TextBlock>
+            </StackPanel>
+        </StackPanel>
     </Grid>
 </Page>

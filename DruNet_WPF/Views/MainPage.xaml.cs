@@ -27,12 +27,14 @@ namespace DruNet_WPF.Views
         {
             if (CheckIfIpAddressIsset())
                 Navigate?.Invoke(new Views.ClientPage());
+            else MessageBox.Show("Wpisz adres IP!", "Uwaga");
         }
 
         private void ServerStart_OnClick(object sender, RoutedEventArgs e)
         {
             if (CheckIfIpAddressIsset())
                 Navigate?.Invoke(new Views.ServerPage());
+            else MessageBox.Show("Wpisz adres IP!", "Uwaga");
         }
     }
 }
