@@ -8,27 +8,41 @@ namespace DruNet_WPF.Core
 {
     class Server
     {
-        private byte[] Buffer;
+        private static Server instance;
+        private static byte[] Buffer;
         private Socket ConnectSocket;
         private Socket WorkSocket;
         private NetworkStream stream;
+        private int loopflag;
         private byte flag;
         private List<byte> package;
         private string data;
 
-        public AddOutput ClientOutput;
+        public AddOutput ServerOutput;
 
-        public Server()
+        private Server()
         {
             this.ConnectSocket = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
             this.ConnectSocket.Bind(new IPEndPoint(IPAddress.Parse("127.0.0.1"), 1995));
             this.ConnectSocket.Listen(0);
             WorkSocket = ConnectSocket.Accept();
             stream = new NetworkStream(WorkSocket);
-           
             package = new List<byte>();
         }
-        
+
+        public static Server Instance
+        {
+            get
+            {
+                if (instance == null)
+                {
+                    instance = new Server();
+                }
+                return instance;
+            }
+        }
+
+
         //TODO
         public void Receive()
         {
@@ -44,7 +58,7 @@ namespace DruNet_WPF.Core
 
             ConvertReceivedData();
         }
-       
+
         public void ConvertReceivedData()
         {
             Buffer = new byte[32];
@@ -59,77 +73,107 @@ namespace DruNet_WPF.Core
         }
 
         //TODO
-        public void Send()
+        public void Send(byte message)
         {
-            throw new NotImplementedException();
+            stream.WriteByte(message);
         }
-        
+
         //TODO
         public void LogIn()
         {
-            package.Clear();
-            Console.WriteLine("Request Login");
+            Receive();
             if (data == "root")
             {
-                Console.WriteLine("Login accepted");
+                Send(1);
+                Receive();
+                if (data == "root")
+                {
+                    ServerOutput("Client connected to server!");
+                    Send(1);
+                    loopflag = 2;
+                }
+                else
+                {
+                    ServerOutput("Client used to wrong login");
+                    Send(0);
+                }
             }
             else
             {
-                Console.WriteLine("Wrong Login. Try again");
+                ServerOutput("Client used to wrong password");
+                Send(0);
             }
-            
         }
-        
-        //TODO
-        public void GetFlag()
-        {
-            throw new NotImplementedException();
-        }
-        
-        //TODO
-        public void PackageClear()
-        {
-            throw new NotImplementedException();
-        }
-        
         //TODO
         public void Switch()
         {
+            Receive();
             flag = package[0];
+            package.Clear();
             switch (flag)
             {
                 case 1:
-                    LogIn();
-                    break;
-                case 2:
                     CreateFile();
                     break;
+                case 2:
+                    EditFile();
+                    break;
+                case 3:
+                    DeleteFile();
+                    break;
+                case 4:
+                    ViewTree();
+                    break;
+
             }
 
         }
-        
+
         //TODO
         public void CreateFile()
         {
-           throw new NotImplementedException();
+            throw new NotImplementedException();
         }
-        
+
+        public void EditFile()
+        {
+            throw new NotImplementedException();
+        }
+
         //TODO
         public void ViewTree()
         {
             throw new NotImplementedException();
         }
-        
+
         //TODO
         public void DeleteFile()
         {
             throw new NotImplementedException();
         }
-        
-        //TODO
-        public void GetAccess()
+
+        public void Disconnect()
         {
-            throw new NotImplementedException();
+
+        }
+
+
+        //TODO     
+        public void Start()
+        {
+            loopflag = 1;
+            do
+            {
+                LogIn();
+            } while (loopflag == 1);
+        }
+
+        public void Function()
+        {
+            do
+            {
+                Switch();
+            } while (loopflag == 2);
         }
     }
 }

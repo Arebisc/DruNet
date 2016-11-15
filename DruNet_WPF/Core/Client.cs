@@ -8,6 +8,7 @@ namespace DruNet_WPF.Core
 {
     class Client
     {
+        private static Client instance;
         private byte[] Buffer;
         private Socket ClientSocket;
         private NetworkStream stream;
@@ -15,7 +16,19 @@ namespace DruNet_WPF.Core
 
         public AddOutput ClientOutput;
 
-        public Client()
+        public static Client Instance
+        {
+            get
+            {
+                if (instance == null)
+                {
+                    instance = new Client();
+                }
+                return instance;
+            }
+        }
+
+        private Client()
         {
             try
             {
@@ -66,57 +79,72 @@ namespace DruNet_WPF.Core
             message.Clear();
         }
 
-        public void Receive()
+        public byte Receive()
         {
-
+            return (byte)stream.ReadByte();
         }
 
         public void LogIn()
         {
-            string login;
-            Console.WriteLine("Insert LogIn:");
-            login = Console.ReadLine();
-            Send(1, login);
-
+            Console.WriteLine("Insert Login: ");
+            Send(1, Console.ReadLine());
+            if (Receive() == 0)
+            {
+                Console.WriteLine("Insert Password: ");
+                Send(1, Console.ReadLine());
+                if (Receive() == 0)
+                {
+                    Console.WriteLine("Connected succesful!");
+                }
+                else
+                {
+                    Console.WriteLine("Wrong Password!");
+                }
+            }
+            else
+            {
+                Console.WriteLine("Wrong Login");
+            }
         }
 
         public void CreateFile()
         {
-            string filename;
-            Console.WriteLine("Insert File Name:");
-            filename = Console.ReadLine();
-            Send(2, filename);
+            Send(2, Console.ReadLine());
+            if (Receive() == 0)
+            {
+                Console.WriteLine("File create successful!");
+            }
+            else
+            {
+                Console.WriteLine("File create error!");
+            }
         }
 
         public void ViewTree()
         {
+            Send(3, null);
+            for(int i=0;i< Receive(); i++)
+            {
 
+            }
         }
 
         public void DeleteFile()
         {
-
+            Send(4, Console.ReadLine());
+            if (Receive() == 0)
+            {
+                Console.WriteLine("File delete successful!");
+            }
+            else
+            {
+                Console.WriteLine("File delete error!");
+            }
         }
 
         public void Run()
         {
-            int a;
-            while (true)
-            {
 
-                Console.WriteLine("1. Login \n 2. Create File");
-                a = Convert.ToInt32(Console.ReadLine());
-
-                switch (a)
-                {
-                    case 1:
-                        LogIn();
-                        break;
-                    case 2:
-                        CreateFile();
-                        break;
-                }
-            }
         }
     }
 }
