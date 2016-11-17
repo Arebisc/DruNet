@@ -13,12 +13,11 @@ namespace DruNet_WPF.Core
         private Socket ConnectSocket;
         private Socket WorkSocket;
         private NetworkStream stream;
-        private int loopflag;
         private byte flag;
         private List<byte> package;
         private string data;
 
-        public AddOutput ServerOutput;
+
 
         private Server()
         {
@@ -50,10 +49,13 @@ namespace DruNet_WPF.Core
             {
                 byte x = (byte)stream.ReadByte();
 
+
+
                 if (x != 0)
                 {
                     package.Add(x);
                 }
+
             }
 
             ConvertReceivedData();
@@ -61,11 +63,11 @@ namespace DruNet_WPF.Core
 
         public void ConvertReceivedData()
         {
-            Buffer = new byte[32];
+            Buffer = new byte[package.Count - 1];
 
-            for (int i = 1; i < package.Count; i++)
+            for (int i = 0; i < package.Count - 1; i++)
             {
-                Buffer[i - 1] = package[i];
+                Buffer[i] = package[i + 1];
             }
 
             data = Encoding.Default.GetString(Buffer);
@@ -81,26 +83,28 @@ namespace DruNet_WPF.Core
         //TODO
         public void LogIn()
         {
-            Receive();
+            Console.WriteLine(data.Length);
             if (data == "root")
             {
+                Console.WriteLine("Login accepted");
                 Send(1);
+                package.Clear();
                 Receive();
                 if (data == "root")
                 {
-                    ServerOutput("Client connected to server!");
+                    Console.WriteLine("Client connected to server!");
                     Send(1);
-                    loopflag = 2;
+                    Function();
                 }
                 else
                 {
-                    ServerOutput("Client used to wrong login");
+                    Console.WriteLine("Client used to wrong login");
                     Send(0);
                 }
             }
             else
             {
-                ServerOutput("Client used to wrong password");
+                Console.WriteLine("Client used to wrong password");
                 Send(0);
             }
         }
@@ -113,16 +117,16 @@ namespace DruNet_WPF.Core
             switch (flag)
             {
                 case 1:
-                    CreateFile();
+                    LogIn();
                     break;
                 case 2:
-                    EditFile();
+
                     break;
                 case 3:
-                    DeleteFile();
+                    ViewTree();
                     break;
                 case 4:
-                    ViewTree();
+
                     break;
 
             }
@@ -161,19 +165,19 @@ namespace DruNet_WPF.Core
         //TODO     
         public void Start()
         {
-            loopflag = 1;
-            do
+            while (true)
             {
-                LogIn();
-            } while (loopflag == 1);
+                Switch();
+
+            }
         }
 
         public void Function()
         {
-            do
-            {
-                Switch();
-            } while (loopflag == 2);
+
+            Console.WriteLine("Funkcje:");
+            Switch();
+
         }
     }
 }

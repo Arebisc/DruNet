@@ -13,8 +13,9 @@ namespace DruNet_WPF.Core
         private Socket ClientSocket;
         private NetworkStream stream;
         private List<byte> message;
+        private int locker = 1;
 
-        public AddOutput ClientOutput;
+
 
         public static Client Instance
         {
@@ -86,15 +87,17 @@ namespace DruNet_WPF.Core
 
         public void LogIn()
         {
+
             Console.WriteLine("Insert Login: ");
             Send(1, Console.ReadLine());
-            if (Receive() == 0)
+            if (Receive() == 1)
             {
                 Console.WriteLine("Insert Password: ");
                 Send(1, Console.ReadLine());
-                if (Receive() == 0)
+                if (Receive() == 1)
                 {
                     Console.WriteLine("Connected succesful!");
+                    locker = 0;
                 }
                 else
                 {
@@ -105,6 +108,7 @@ namespace DruNet_WPF.Core
             {
                 Console.WriteLine("Wrong Login");
             }
+
         }
 
         public void CreateFile()
@@ -122,10 +126,17 @@ namespace DruNet_WPF.Core
 
         public void ViewTree()
         {
-            Send(3, null);
-            for(int i=0;i< Receive(); i++)
+            if (locker == 1)
             {
+                Console.WriteLine("You have no access! Please LogIn");
+            }
+            else
+            {
+                Send(3, null);
+                for (int i = 0; i < Receive(); i++)
+                {
 
+                }
             }
         }
 
@@ -144,6 +155,27 @@ namespace DruNet_WPF.Core
 
         public void Run()
         {
+
+
+            while (true)
+            {
+                switch (Console.ReadLine())
+                {
+                    case "/login":
+                        LogIn();
+                        break;
+                    case "/ls":
+                        ViewTree();
+                        break;
+                    case "/logout":
+                        Console.WriteLine("LogOut!");
+                        locker = 1;
+                        break;
+                }
+            }
+
+
+
 
         }
     }

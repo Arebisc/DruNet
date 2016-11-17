@@ -31,5 +31,10 @@ namespace DruNet_WPF.Views
         {
             OutputTb.Text += output;
         }
+
+        private void CommandLineTb_TextChanged(object sender, TextChangedEventArgs e)
+        {
+
+        }
     }
 }

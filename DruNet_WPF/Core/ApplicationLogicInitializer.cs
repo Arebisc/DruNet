@@ -11,12 +11,15 @@ namespace DruNet_WPF.Core
     {
         public static void ClientRun()
         {
-                  
+            Client client = Client.Instance;
+            client.LogIn();
+           
         }
 
         public static void ServerRun()
         {
-                  
+            Server server = Server.Instance;
+            server.Start();
         }
     }
 }
