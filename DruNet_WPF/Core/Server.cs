@@ -179,7 +179,6 @@ namespace DruNet_WPF.Core
             while (true)
             {
                 Switch();
-
             }
         }
 

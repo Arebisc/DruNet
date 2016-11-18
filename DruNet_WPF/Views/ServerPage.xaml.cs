@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
@@ -26,16 +27,19 @@ namespace DruNet_WPF.Views
             InitializeComponent();
             //ApplicationLogicInitializer.ServerRun();
             Server.Instance.PrintOutputOnTextBlock += PrintOutput;
+            ServerRun();
         }
 
         public void AddOutput(string output)
         {
             OutputTb.Text += output;
         }
-        //TODO
-        private async void ServerRun()
+
+        private void ServerRun()
         {
-            
+            ThreadStart serverThread = new ThreadStart(Server.Instance.Start);
+            Thread serverListiner = new Thread(serverThread);
+            serverListiner.Start();
         }
 
         public void PrintOutput(string output)
