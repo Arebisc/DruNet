@@ -6,5 +6,5 @@ using System.Threading.Tasks;
 
 namespace DruNet_WPF.Core
 {
-    public delegate void AddOutput(string output);
+    public delegate void PrintOutput(string output);
 }

@@ -14,8 +14,27 @@ namespace DruNet_WPF.Core
         private NetworkStream stream;
         private List<byte> message;
         private int locker = 1;
+        private static string _Ip = "127.0.0.1";
+        private static int _Port = 1995;
+        public PrintOutput PrintOutputOnTextBlock;
 
+        public static string Ip
+        {
+            get { return _Ip; }
+            set { _Ip = value; }
+        }
 
+        public static int Port
+        {
+            get { return _Port; }
+            set { _Port = value; }
+        }
+
+        public void Print(string message)
+        {
+            Console.WriteLine(message);
+            PrintOutputOnTextBlock?.Invoke(message);
+        }
 
         public static Client Instance
         {
@@ -34,14 +53,14 @@ namespace DruNet_WPF.Core
             try
             {
                 ClientSocket = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
-                IPEndPoint endPoint = new IPEndPoint(IPAddress.Parse("127.0.0.1"), 1995);
+                IPEndPoint endPoint = new IPEndPoint(IPAddress.Parse(Ip), Port);
                 ClientSocket.Connect(endPoint);
                 stream = new NetworkStream(ClientSocket);
                 message = new List<byte>();
 
                 if (ClientSocket.Connected)
                 {
-                    Console.WriteLine("Połączono z serwerem");
+                    Print("Połączono z serwerem");
                 }
             }
             catch (SocketException a)
@@ -88,25 +107,25 @@ namespace DruNet_WPF.Core
         public void LogIn()
         {
 
-            Console.WriteLine("Insert Login: ");
+            Print("Insert Login: ");
             Send(1, Console.ReadLine());
             if (Receive() == 1)
             {
-                Console.WriteLine("Insert Password: ");
+                Print("Insert Password: ");
                 Send(1, Console.ReadLine());
                 if (Receive() == 1)
                 {
-                    Console.WriteLine("Connected succesful!");
+                    Print("Connected succesful!");
                     locker = 0;
                 }
                 else
                 {
-                    Console.WriteLine("Wrong Password!");
+                    Print("Wrong Password!");
                 }
             }
             else
             {
-                Console.WriteLine("Wrong Login");
+                Print("Wrong Login");
             }
 
         }
@@ -116,11 +135,11 @@ namespace DruNet_WPF.Core
             Send(2, Console.ReadLine());
             if (Receive() == 0)
             {
-                Console.WriteLine("File create successful!");
+                Print("File create successful!");
             }
             else
             {
-                Console.WriteLine("File create error!");
+                Print("File create error!");
             }
         }
 
@@ -128,7 +147,7 @@ namespace DruNet_WPF.Core
         {
             if (locker == 1)
             {
-                Console.WriteLine("You have no access! Please LogIn");
+                Print("You have no access! Please LogIn");
             }
             else
             {
@@ -145,18 +164,16 @@ namespace DruNet_WPF.Core
             Send(4, Console.ReadLine());
             if (Receive() == 0)
             {
-                Console.WriteLine("File delete successful!");
+                Print("File delete successful!");
             }
             else
             {
-                Console.WriteLine("File delete error!");
+                Print("File delete error!");
             }
         }
 
         public void Run()
         {
-
-
             while (true)
             {
                 switch (Console.ReadLine())
@@ -168,15 +185,11 @@ namespace DruNet_WPF.Core
                         ViewTree();
                         break;
                     case "/logout":
-                        Console.WriteLine("LogOut!");
+                        Print("LogOut!");
                         locker = 1;
                         break;
                 }
             }
-
-
-
-
         }
     }
 }

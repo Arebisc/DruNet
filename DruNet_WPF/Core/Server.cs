@@ -16,13 +16,32 @@ namespace DruNet_WPF.Core
         private byte flag;
         private List<byte> package;
         private string data;
+        private static string _Ip = "127.0.0.1";
+        private static int _Port = 1995;
+        public PrintOutput PrintOutputOnTextBlock;
 
+        public void Print(string message)
+        {
+            Console.WriteLine(message);
+            PrintOutputOnTextBlock?.Invoke(message);
+        }
 
+        public static string Ip
+        {
+            get { return _Ip; }
+            set { _Ip = value; }
+        }
+
+        public static int Port
+        {
+            get { return _Port; }
+            set { _Port = value; }
+        }
 
         private Server()
         {
             this.ConnectSocket = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
-            this.ConnectSocket.Bind(new IPEndPoint(IPAddress.Parse("127.0.0.1"), 1995));
+            this.ConnectSocket.Bind(new IPEndPoint(IPAddress.Parse(Ip), Port));
             this.ConnectSocket.Listen(0);
             WorkSocket = ConnectSocket.Accept();
             stream = new NetworkStream(WorkSocket);
@@ -41,7 +60,6 @@ namespace DruNet_WPF.Core
             }
         }
 
-
         //TODO
         public void Receive()
         {
@@ -49,15 +67,11 @@ namespace DruNet_WPF.Core
             {
                 byte x = (byte)stream.ReadByte();
 
-
-
                 if (x != 0)
                 {
                     package.Add(x);
                 }
-
             }
-
             ConvertReceivedData();
         }
 
@@ -71,7 +85,7 @@ namespace DruNet_WPF.Core
             }
 
             data = Encoding.Default.GetString(Buffer);
-            Console.WriteLine(data);
+            Print(data);
         }
 
         //TODO
@@ -86,25 +100,25 @@ namespace DruNet_WPF.Core
             Console.WriteLine(data.Length);
             if (data == "root")
             {
-                Console.WriteLine("Login accepted");
+                Print("Login accepted");
                 Send(1);
                 package.Clear();
                 Receive();
                 if (data == "root")
                 {
-                    Console.WriteLine("Client connected to server!");
+                    Print("Client connected to server!");
                     Send(1);
                     Function();
                 }
                 else
                 {
-                    Console.WriteLine("Client used to wrong login");
+                    Print("Client used wrong login");
                     Send(0);
                 }
             }
             else
             {
-                Console.WriteLine("Client used to wrong password");
+                Print("Client used to wrong password");
                 Send(0);
             }
         }
@@ -120,15 +134,12 @@ namespace DruNet_WPF.Core
                     LogIn();
                     break;
                 case 2:
-
                     break;
                 case 3:
                     ViewTree();
                     break;
                 case 4:
-
                     break;
-
             }
 
         }
@@ -174,8 +185,7 @@ namespace DruNet_WPF.Core
 
         public void Function()
         {
-
-            Console.WriteLine("Funkcje:");
+            Print("Funkcje:");
             Switch();
 
         }

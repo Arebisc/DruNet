@@ -25,9 +25,20 @@ namespace DruNet_WPF.Views
         {
             InitializeComponent();
             //ApplicationLogicInitializer.ServerRun();
+            Server.Instance.PrintOutputOnTextBlock += PrintOutput;
         }
 
         public void AddOutput(string output)
+        {
+            OutputTb.Text += output;
+        }
+        //TODO
+        private async void ServerRun()
+        {
+            
+        }
+
+        public void PrintOutput(string output)
         {
             OutputTb.Text += output;
         }

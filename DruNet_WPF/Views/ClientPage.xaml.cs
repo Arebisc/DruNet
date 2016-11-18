@@ -25,16 +25,22 @@ namespace DruNet_WPF.Views
         {
             InitializeComponent();
             //ApplicationLogicInitializer.ClientRun();
+            Client.Instance.PrintOutputOnTextBlock += PrintOutput;
+            
         }
 
-        public void AddOutput(string output)
+        public void PrintOutput(string output)
         {
             OutputTb.Text += output;
         }
 
-        private void CommandLineTb_TextChanged(object sender, TextChangedEventArgs e)
+        private void CommandLine_OnKeyDown(object sender, KeyEventArgs e)
         {
-
+            if (e.Key == Key.Enter)
+            {
+                Client.Instance.Send(1, CommandLineTb.Text);
+                CommandLineTb.Text = String.Empty;
+            }
         }
     }
 }

@@ -24,7 +24,7 @@ namespace DruNet_WPF
     {
         public MainWindow()
         {
-            WindowState = WindowState.Maximized;
+//            WindowState = WindowState.Maximized;
             InitializeComponent();
 
             MainPage.Navigate += RootFrame.NavigationService.Navigate;

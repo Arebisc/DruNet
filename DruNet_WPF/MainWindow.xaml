@@ -7,7 +7,7 @@
         xmlns:Controls="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
         mc:Ignorable="d"
                       
-        Title="DruNet" Height="400" Width="700"
+        Title="DruNet" Height="450" Width="800"
         WindowStartupLocation="CenterScreen"
                       >
     <Grid>

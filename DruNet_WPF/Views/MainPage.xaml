@@ -10,12 +10,15 @@
 
     <Grid>
         <StackPanel HorizontalAlignment="Center">
-            <Label>Wpisz adres IP</Label>
-            <TextBox Name="IpAddress" Width="100"/>
+            <Label>Wpisz adres IP i port</Label>
+            <StackPanel Orientation="Horizontal" Margin="20">
+                <TextBox Name="IpAddress" Width="100"/>
+                <TextBox Name="Port" Width="50" Margin="10, 0, 0, 0"></TextBox>
+            </StackPanel>
             
             <StackPanel Orientation="Horizontal" Margin="20">
                 <Button Click="ClientStart_OnClick">Start Klienta</Button>
-                <Button Click="ServerStart_OnClick">Start Serwera</Button>
+                <Button Click="ServerStart_OnClick" Margin="10, 0, 0, 0">Start Serwera</Button>
             </StackPanel>
 
         </StackPanel>

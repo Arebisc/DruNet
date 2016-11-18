@@ -9,7 +9,7 @@
       Title="ClientPage">
 
     <Grid>
-        <StackPanel Orientation="Vertical">
+        <StackPanel Orientation="Vertical" KeyDown="CommandLine_OnKeyDown">
             <StackPanel Orientation="Horizontal" VerticalAlignment="Top" HorizontalAlignment="Center">
                 <TextBlock FontSize="22" FontFamily="Viner Hand ITC" FontWeight="Bold">Klient</TextBlock>
             </StackPanel>
