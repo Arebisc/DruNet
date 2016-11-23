@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Net;
 using System.Net.Sockets;
 using System.Text;
+using TelnetServer;
 
 namespace DruNet_WPF.Core
 {
@@ -14,10 +15,12 @@ namespace DruNet_WPF.Core
         private Socket WorkSocket;
         private NetworkStream stream;
         private byte flag;
+        private byte locker = 1;
         private List<byte> package;
         private string data;
         private static string _Ip = "127.0.0.1";
         private static int _Port = 1995;
+        private FileSystemOperator path;
         public PrintOutput PrintOutputOnTextBlock;
 
         public void Print(string message)
@@ -46,6 +49,7 @@ namespace DruNet_WPF.Core
             WorkSocket = ConnectSocket.Accept();
             stream = new NetworkStream(WorkSocket);
             package = new List<byte>();
+            path = new FileSystemOperator();
         }
 
         public static Server Instance
@@ -60,18 +64,22 @@ namespace DruNet_WPF.Core
             }
         }
 
-        //TODO
+
         public void Receive()
         {
-            for (int i = 0; i < 32; i++)
-            {
-                byte x = (byte)stream.ReadByte();
+            byte x;
 
-                if (x != 0)
+            do
+            {
+                x = (byte)stream.ReadByte();
+
+                if (x != 254)
                 {
+
                     package.Add(x);
                 }
-            }
+
+            } while (x != 254);
             ConvertReceivedData();
         }
 
@@ -88,41 +96,56 @@ namespace DruNet_WPF.Core
             Print(data);
         }
 
-        //TODO
-        public void Send(byte message)
+        public void SendFlag(byte message)
         {
             stream.WriteByte(message);
         }
 
-        //TODO
+        public void SendMsg(string message)
+        {
+            Buffer = Encoding.Default.GetBytes(message);
+            for (int i = 0; i < message.Length; i++)
+            {
+                stream.WriteByte(Buffer[i]);
+            }
+
+            stream.WriteByte(254);
+        }
+
+
         public void LogIn()
         {
-            Console.WriteLine(data.Length);
             if (data == "root")
             {
                 Print("Login accepted");
-                Send(1);
+                SendFlag(1);
                 package.Clear();
                 Receive();
                 if (data == "root")
                 {
                     Print("Client connected to server!");
-                    Send(1);
-                    Function();
+                    SendFlag(1);
+                    package.Clear();
+                    locker = 0;
                 }
                 else
                 {
-                    Print("Client used wrong login");
-                    Send(0);
+                    package.Clear();
+                    Print("Client used wrong password");
+                    SendFlag(0);
+
                 }
             }
             else
             {
-                Print("Client used to wrong password");
-                Send(0);
+                package.Clear();
+                Print("Client used to wrong login");
+                SendFlag(0);
+
             }
         }
-        //TODO
+
+
         public void Switch()
         {
             Receive();
@@ -130,63 +153,86 @@ namespace DruNet_WPF.Core
             package.Clear();
             switch (flag)
             {
+
                 case 1:
                     LogIn();
                     break;
                 case 2:
+                    CreateDirectory();
                     break;
                 case 3:
                     ViewTree();
                     break;
                 case 4:
+                    ReadFile();
+                    break;
+                case 5:
+                    CreateFile();
+                    break;
+                case 0:
+                    locker = 1;
+                    package.Clear();
                     break;
             }
-
         }
 
-        //TODO
+
+        public void CreateDirectory()
+        {
+            path.CreateDirectory(data);
+        }
+
         public void CreateFile()
         {
-            throw new NotImplementedException();
+            string filename;
+            string filedata;
+
+            filename = data + ".txt";
+            Receive();
+            filedata = data;
+
+            path.CreateFile(filename, filedata);
         }
 
-        public void EditFile()
+
+        public void ReadFile()
         {
-            throw new NotImplementedException();
+            string text;
+            text = path.ReadFile(data + ".txt");
+            SendMsg(text);
         }
 
-        //TODO
+
         public void ViewTree()
         {
-            throw new NotImplementedException();
+            string tree = null;
+            List<string> listdir = path.ListDirectory(path.CurrentPath);
+
+            if (locker == 0)
+            {
+                for (int i = 0; i < listdir.Count; i++)
+                {
+                    tree += listdir[i] + "\n";
+                }
+
+                SendMsg(tree);
+            }
+            Print(tree);
         }
 
-        //TODO
         public void DeleteFile()
         {
             throw new NotImplementedException();
         }
 
-        public void Disconnect()
-        {
-
-        }
-
-
-        //TODO     
         public void Start()
         {
             while (true)
             {
+                package.Clear();
+                SendMsg(path.CurrentPath);
                 Switch();
             }
-        }
-
-        public void Function()
-        {
-            Print("Funkcje:");
-            Switch();
-
         }
     }
 }
