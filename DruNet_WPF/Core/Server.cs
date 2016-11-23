@@ -133,7 +133,6 @@ namespace DruNet_WPF.Core
                     package.Clear();
                     Print("Client used wrong password");
                     SendFlag(0);
-
                 }
             }
             else
@@ -153,7 +152,6 @@ namespace DruNet_WPF.Core
             package.Clear();
             switch (flag)
             {
-
                 case 1:
                     LogIn();
                     break;
@@ -230,7 +228,7 @@ namespace DruNet_WPF.Core
             while (true)
             {
                 package.Clear();
-                SendMsg(path.CurrentPath);
+                //SendMsg(path.CurrentPath);
                 Switch();
             }
         }

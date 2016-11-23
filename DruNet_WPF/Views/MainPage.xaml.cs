@@ -17,7 +17,7 @@ namespace DruNet_WPF.Views
         public MainPage()
         {
             InitializeComponent();
-            IpAddress.Text = "192.168.0.14";
+            IpAddress.Text = "127.0.0.1";
             Port.Text = "1995";
         }
 

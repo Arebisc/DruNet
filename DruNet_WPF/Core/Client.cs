@@ -13,7 +13,7 @@ namespace DruNet_WPF.Core
         private Socket ClientSocket;
         private NetworkStream stream;
         private List<byte> message;
-        private int locker = 1;
+        public int locker = 1;
         private static string _Ip = "127.0.0.1";
         private static int _Port = 1995;
         private string path;
@@ -82,8 +82,6 @@ namespace DruNet_WPF.Core
                     message.Add(254);
                 }
             }
-
-
             return message;
         }
 
@@ -118,47 +116,15 @@ namespace DruNet_WPF.Core
                 {
                     ReceiverMsg.Add(x);
                 }
-
-
             } while (x != 254);
-
-
 
             data = Encoding.Default.GetString(ReceiverMsg.ToArray());
 
             return data;
         }
 
-        public void LogIn()
+        public void CreateDirectory(string message)
         {
-
-            Print("Insert Login: ");
-            Send(1, Console.ReadLine());
-            if (ReceiveFlag() == 1)
-            {
-                Print("Insert Password: ");
-                Send(1, Console.ReadLine());
-                if (ReceiveFlag() == 1)
-                {
-                    Print("Connected succesful!");
-                    locker = 0;
-                }
-                else
-                {
-                    Print("Wrong Password!");
-                }
-            }
-            else
-            {
-                Print("Wrong Login");
-            }
-
-        }
-
-        public void CreateDirectory()
-        {
-
-
             if (locker == 1)
             {
                 Print("You have no access! Please LogIn");
@@ -166,7 +132,7 @@ namespace DruNet_WPF.Core
             else
             {
                 Print("Inset directory name: ");
-                Send(2, Console.ReadLine());
+                Send(2, message);
             }
         }
 
@@ -183,7 +149,7 @@ namespace DruNet_WPF.Core
             }
         }
 
-        public void CreateFile()
+        public void CreateFile(string message)
         {
             if (locker == 1)
             {
@@ -192,13 +158,14 @@ namespace DruNet_WPF.Core
             else
             {
                 Print("Insert filename");
-                Send(5, Console.ReadLine());
+                Send(5, message);
                 Print("Insert filedata");
-                Send(5, Console.ReadLine());
+                Send(5, message);
             }
         }
 
-        public void ReadFile()
+        //TODO
+        public void ReadFile(string message)
         {
             if (locker == 1)
             {
@@ -207,13 +174,15 @@ namespace DruNet_WPF.Core
             else
             {
                 Console.WriteLine("Insert filename");
-                Send(4, Console.ReadLine());
+                Send(4, message);
                 Print(ReceiveMsg());
             }
         }
 
+        //TODO
         public void DeleteFile()
         {
+            throw new NotImplementedException();
             Send(4, Console.ReadLine());
             if (ReceiveFlag() == 0)
             {
@@ -228,65 +197,6 @@ namespace DruNet_WPF.Core
         public void GetPath()
         {
             path = ReceiveMsg();
-        }
-
-        public void Run()
-        {
-            Print("/login - logowanie");
-            Print("/logout - wylogowanie");
-            Print("/ls - wyswietla liste katalogow");
-            Print("/cd - tworzy nowy katalog");
-            Print("/cf - tworzy nowy plik");
-            Print("/rf - wyswietla zawartowsc pliku");
-
-            while (true)
-            {
-
-
-
-                if (stream.DataAvailable)
-                {
-                    GetPath();
-                    Print(path + " ");
-                }
-                else
-                {
-                    Print(path + " ");
-                }
-
-                switch (Console.ReadLine())
-                {
-                    case "/login":
-                        LogIn();
-                        break;
-                    case "/ls":
-                        ViewTree();
-                        break;
-                    case "/logout":
-                        locker = 1;
-                        Send(0, " ");
-                        break;
-                    case "/cd":
-                        CreateDirectory();
-                        break;
-                    case "/rf":
-                        ReadFile();
-                        break;
-                    case "/cf":
-                        CreateFile();
-                        break;
-                    case "/help":
-                        Print("/login - logowanie");
-                        Print("/logout - wylogowanie");
-                        Print("/ls - wyswietla liste katalogow");
-                        Print("/cd - tworzy nowy katalog");
-                        Print("/cf - tworzy nowy plik");
-                        Print("/rf - wyswietla zawartowsc pliku");
-                        break;
-                    default:
-                        break;
-                }
-            }
         }
     }
 }
