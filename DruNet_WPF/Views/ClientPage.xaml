@@ -29,6 +29,7 @@
                 <StackPanel Orientation="Horizontal">
                     <Button Content="Stwórz katalog" Click="CreateDir_OnClick" />
                     <Button Content="Stwórz plik" Click="CreateFile_OnClick" />
+                    <Button Content="Otwórz plik" Click="OpenFile_OnClick" />
                 </StackPanel>
                 <Label>Parametry:</Label>
                 <TextBox Name="ParameterTb" HorizontalAlignment="Stretch" />

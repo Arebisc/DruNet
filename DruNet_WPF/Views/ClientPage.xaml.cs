@@ -124,5 +124,15 @@ namespace DruNet_WPF.Views
             }
             else MessageBox.Show("Uzupełnij nazwę!", "Uwaga!");
         }
+
+        private void OpenFile_OnClick(object sender, RoutedEventArgs e)
+        {
+            if (ParameterTb.Text != String.Empty)
+            {
+                Client.Instance.ReadFile(ParameterTb.Text);
+                ParameterTb.Text = String.Empty;
+            }
+            else MessageBox.Show("Uzupełnij nazwę!", "Uwaga!");
+        }
     }
 }
