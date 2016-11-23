@@ -96,6 +96,7 @@ namespace DruNet_WPF.Views
                 {
                     PrintOutput("Logged succesful!");
                     Client.Instance.locker = 0;
+                    LoginPanel.Visibility = Visibility.Hidden;
                 }
                 else
                 {

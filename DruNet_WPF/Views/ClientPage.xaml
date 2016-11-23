@@ -28,10 +28,12 @@
                 </StackPanel>
                 <Button Content="Zatwierdź"  Click="LoginAction" Margin="10, 0, 10, 0"/>
             </StackPanel>
-            <StackPanel>
-                <Label FontFamily="Snap ITC">Output</Label>
-                <TextBlock Height="100" Name="OutputTb"></TextBlock>
-            </StackPanel>
+            <Label FontFamily="Snap ITC">Output</Label>
+            <DockPanel Height="200">
+                <ScrollViewer>
+                    <TextBlock Name="OutputTb"></TextBlock>
+                </ScrollViewer>
+            </DockPanel>
         </StackPanel>
     </Grid>
 </Page>
