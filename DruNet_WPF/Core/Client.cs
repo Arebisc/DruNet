@@ -14,7 +14,7 @@ namespace DruNet_WPF.Core
         private NetworkStream stream;
         private List<byte> message;
         private int locker = 1;
-        private static string _Ip = "127.0.0.1";
+        private static string _Ip = "192.168.0.14";
         private static int _Port = 1995;
         public PrintOutput PrintOutputOnTextBlock;
 
