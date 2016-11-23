@@ -13,9 +13,11 @@
             <StackPanel Orientation="Horizontal" VerticalAlignment="Top" HorizontalAlignment="Center">
                 <TextBlock FontSize="22" FontFamily="Viner Hand ITC" FontWeight="Bold">Server</TextBlock>
             </StackPanel>
-            <StackPanel>
+            <StackPanel Orientation="Vertical" VerticalAlignment="Stretch" >
                 <Label>Output</Label>
-                <TextBlock Height="100" Name="OutputTb"></TextBlock>
+                <ScrollViewer>
+                    <TextBlock Name="OutputTb" TextWrapping="Wrap" />
+                </ScrollViewer>
             </StackPanel>
         </StackPanel>
     </Grid>

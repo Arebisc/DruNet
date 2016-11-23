@@ -44,7 +44,10 @@ namespace DruNet_WPF.Views
 
         public void PrintOutput(string output)
         {
-            OutputTb.Text += output;
+            Dispatcher.Invoke(() =>
+            {
+                OutputTb.Text += (output + "\n");
+            });            
         }
     }
 }
