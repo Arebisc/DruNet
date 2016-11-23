@@ -11,6 +11,8 @@ namespace TelnetServer
     {
         private readonly string RootPath;
         public string CurrentPath;
+
+
         public FileSystemOperator()
         {
             var currentDir = AppDomain.CurrentDomain.BaseDirectory;

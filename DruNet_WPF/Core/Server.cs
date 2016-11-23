@@ -185,7 +185,7 @@ namespace DruNet_WPF.Core
             string filename;
             string filedata;
 
-            filename = data + ".txt";
+            filename = data;
             Receive();
             filedata = data;
 
@@ -196,7 +196,7 @@ namespace DruNet_WPF.Core
         public void ReadFile()
         {
             string text;
-            text = path.ReadFile(data + ".txt");
+            text = path.ReadFile(data);
             SendMsg(text);
         }
 

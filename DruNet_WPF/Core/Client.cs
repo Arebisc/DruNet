@@ -131,7 +131,6 @@ namespace DruNet_WPF.Core
             }
             else
             {
-                Print("Inset directory name: ");
                 Send(2, message);
             }
         }
@@ -149,7 +148,7 @@ namespace DruNet_WPF.Core
             }
         }
 
-        public void CreateFile(string message)
+        public void CreateFile(string fileName, string content)
         {
             if (locker == 1)
             {
@@ -157,10 +156,8 @@ namespace DruNet_WPF.Core
             }
             else
             {
-                Print("Insert filename");
-                Send(5, message);
-                Print("Insert filedata");
-                Send(5, message);
+                Send(5, fileName);
+                Send(5, content);
             }
         }
 

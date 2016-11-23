@@ -15,12 +15,11 @@
                 <TextBox Name="IpAddress" Width="100"/>
                 <TextBox Name="Port" Width="50" Margin="10, 0, 0, 0"></TextBox>
             </StackPanel>
-            
+
             <StackPanel Orientation="Horizontal" Margin="20">
                 <Button Click="ClientStart_OnClick">Start Klienta</Button>
                 <Button Click="ServerStart_OnClick" Margin="10, 0, 0, 0">Start Serwera</Button>
             </StackPanel>
-
         </StackPanel>
     </Grid>
 </Page>

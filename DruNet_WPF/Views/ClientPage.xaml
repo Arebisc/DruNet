@@ -13,11 +13,7 @@
             <StackPanel Orientation="Horizontal" VerticalAlignment="Top" HorizontalAlignment="Center">
                 <TextBlock FontSize="22" FontFamily="Viner Hand ITC" FontWeight="Bold">Klient</TextBlock>
             </StackPanel>
-            <Label FontFamily="Snap ITC">Menu</Label>
-            <StackPanel Orientation="Horizontal">
-                <Button Content="Listuj ścieżkę"/>
-            </StackPanel>
-            <StackPanel Orientation="Horizontal" Name="LoginPanel" Visibility="Visible">
+            <StackPanel Orientation="Horizontal" Name="LoginPanel"  Margin="15">
                 <StackPanel Orientation="Vertical" Margin="10, 0, 10, 0">
                     <Label>Login</Label>
                     <TextBox Name="LoginTb" Width="50"></TextBox>
@@ -27,6 +23,20 @@
                     <PasswordBox Name="PasswordTb" Width="50"></PasswordBox>
                 </StackPanel>
                 <Button Content="Zatwierdź"  Click="LoginAction" Margin="10, 0, 10, 0"/>
+            </StackPanel>
+            <StackPanel Orientation="Vertical" Visibility="Visible" Name="ParametersPanel">
+                <Label FontFamily="Snap ITC">Menu</Label>
+                <StackPanel Orientation="Horizontal">
+                    <Button Content="Stwórz katalog" Click="CreateDir_OnClick" />
+                    <Button Content="Stwórz plik" Click="CreateFile_OnClick" />
+                </StackPanel>
+                <Label>Parametry:</Label>
+                <TextBox Name="ParameterTb" HorizontalAlignment="Stretch" />
+                <StackPanel Orientation="Horizontal" Margin="0, 40, 0, 0">
+                    <Button Content="Przejdź do folderu: " />
+                    <TextBox Name="GoToDirectoryTb" Width="120" />
+                    <Button Content="Cofnij do poprzedniego folderu" IsEnabled="False" />
+                </StackPanel>
             </StackPanel>
             <Label FontFamily="Snap ITC">Output</Label>
             <DockPanel Height="200">
