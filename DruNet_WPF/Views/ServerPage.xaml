@@ -14,7 +14,7 @@
                 <TextBlock FontSize="22" FontFamily="Viner Hand ITC" FontWeight="Bold">Server</TextBlock>
             </StackPanel>
             <Label FontFamily="Snap ITC">Output</Label>
-            <DockPanel Height="200" Margin="15, 20, 15, 0">
+            <DockPanel Height="350" Margin="15, 20, 15, 0">
                 <ScrollViewer VerticalScrollBarVisibility="Auto">
                     <TextBlock Name="OutputTb" TextWrapping="Wrap" />
                 </ScrollViewer>

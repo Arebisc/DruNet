@@ -88,7 +88,8 @@ namespace DruNet_WPF.Views
                 {
                     PrintOutput("Logged succesful!");
                     Client.Instance.locker = 0;
-                    LoginPanel.Children.Clear();
+                    LoginPanel.Visibility = Visibility.Hidden;
+                    ParametersPanel.Visibility = Visibility.Visible;
                 }
                 else
                 {
@@ -133,6 +134,13 @@ namespace DruNet_WPF.Views
                 ParameterTb.Text = String.Empty;
             }
             else MessageBox.Show("Uzupełnij nazwę!", "Uwaga!");
+        }
+
+        private void Logout_OnClick(object sender, RoutedEventArgs e)
+        {
+            Client.Instance.LogOut();
+            LoginPanel.Visibility = Visibility.Visible;
+            ParametersPanel.Visibility = Visibility.Hidden;
         }
     }
 }

@@ -123,7 +123,7 @@ namespace DruNet_WPF.Core
             return data;
         }
 
-        public void CreateDirectory(string message)
+        public void CreateDirectory(string dirName)
         {
             if (locker == 1)
             {
@@ -131,7 +131,9 @@ namespace DruNet_WPF.Core
             }
             else
             {
-                Send(2, message);
+                Send(2, dirName);
+                Print("Successfully created new directory: " + dirName);
+                Print("");
             }
         }
 
@@ -145,6 +147,7 @@ namespace DruNet_WPF.Core
             {
                 Send(3, "");
                 Print(ReceiveMsg());
+                Print("");
             }
         }
 
@@ -158,10 +161,11 @@ namespace DruNet_WPF.Core
             {
                 Send(5, fileName);
                 Send(5, content);
+                Print("Successfully created new file: " + fileName);
+                Print("");
             }
         }
 
-        //TODO
         public void ReadFile(string message)
         {
             if (locker == 1)
@@ -173,6 +177,7 @@ namespace DruNet_WPF.Core
                 Console.WriteLine("Insert filename");
                 Send(4, message);
                 Print(ReceiveMsg());
+                Print("");
             }
         }
 
@@ -194,6 +199,13 @@ namespace DruNet_WPF.Core
         public void GetPath()
         {
             path = ReceiveMsg();
+        }
+
+        public void LogOut()
+        {
+            locker = 1;
+            Send(0, " ");
+            Print("Successfully logged out!");
         }
     }
 }

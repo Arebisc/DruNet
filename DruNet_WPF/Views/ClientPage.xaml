@@ -13,7 +13,7 @@
             <StackPanel Orientation="Horizontal" VerticalAlignment="Top" HorizontalAlignment="Center">
                 <TextBlock FontSize="22" FontFamily="Viner Hand ITC" FontWeight="Bold">Klient</TextBlock>
             </StackPanel>
-            <StackPanel Orientation="Horizontal" Name="LoginPanel"  Margin="15">
+            <StackPanel Orientation="Horizontal" Name="LoginPanel"  Margin="15" Visibility="Visible">
                 <StackPanel Orientation="Vertical" Margin="10, 0, 10, 0">
                     <Label>Login</Label>
                     <TextBox Name="LoginTb" Width="50"></TextBox>
@@ -24,7 +24,7 @@
                 </StackPanel>
                 <Button Content="Zatwierdź"  Click="LoginAction" Margin="10, 0, 10, 0"/>
             </StackPanel>
-            <StackPanel Orientation="Vertical" Visibility="Visible" Name="ParametersPanel">
+            <StackPanel Orientation="Vertical" Visibility="Hidden"  Name="ParametersPanel">
                 <Label FontFamily="Snap ITC">Menu</Label>
                 <StackPanel Orientation="Horizontal">
                     <Button Content="Stwórz katalog" Click="CreateDir_OnClick" />
@@ -38,6 +38,7 @@
                     <TextBox Name="GoToDirectoryTb" Width="120" />
                     <Button Content="Cofnij do poprzedniego folderu" IsEnabled="False" />
                 </StackPanel>
+                <Button Content="Wyloguj" Click="Logout_OnClick" />
             </StackPanel>
             <Label FontFamily="Snap ITC">Output</Label>
             <DockPanel Height="200">

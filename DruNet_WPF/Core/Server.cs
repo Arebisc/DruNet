@@ -143,8 +143,7 @@ namespace DruNet_WPF.Core
 
             }
         }
-
-
+        
         public void Switch()
         {
             Receive();
@@ -170,6 +169,7 @@ namespace DruNet_WPF.Core
                 case 0:
                     locker = 1;
                     package.Clear();
+                    Print("Client has been logged out successfully");
                     break;
             }
         }
