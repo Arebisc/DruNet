@@ -34,9 +34,11 @@
                 <Label>Parametry:</Label>
                 <TextBox Name="ParameterTb" HorizontalAlignment="Stretch" />
                 <StackPanel Orientation="Horizontal" Margin="0, 40, 0, 0">
-                    <Button Content="Przejdź do folderu: " />
+                    <Button Content="Przejdź do folderu: " Click="GoToDir_OnClick" />
                     <TextBox Name="GoToDirectoryTb" Width="120" />
-                    <Button Content="Cofnij do poprzedniego folderu" IsEnabled="False" />
+                    <Button Content="Aktualna ścieżka" Click="GetCurrentPath_OnClick"/>
+                    <Button Content="Cofnij do poprzedniego folderu" IsEnabled="False" Name="BackButton"  Click="BackButton_OnClick"/>
+                    <Button Content="Listuj katalog" Click="ListCatalog_OnClick" />
                 </StackPanel>
                 <Button Content="Wyloguj" Click="Logout_OnClick" />
             </StackPanel>

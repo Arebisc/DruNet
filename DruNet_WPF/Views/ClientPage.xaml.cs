@@ -23,6 +23,8 @@ namespace DruNet_WPF.Views
     /// </summary>
     public partial class ClientPage : Page
     {
+        private int backCounter = 0;
+
         public ClientPage()
         {
             InitializeComponent();
@@ -107,7 +109,10 @@ namespace DruNet_WPF.Views
             if (ParameterTb.Text != String.Empty)
             {
                 Client.Instance.CreateDirectory(ParameterTb.Text);
+                Client.Instance.Print("Successfullu created new directory: " + ParameterTb.Text);
                 ParameterTb.Text = String.Empty;
+                backCounter++;
+                BackButton.IsEnabled = true;
             }
             else MessageBox.Show("Uzupełnij nazwę!", "Uwaga!");
         }
@@ -141,6 +146,42 @@ namespace DruNet_WPF.Views
             Client.Instance.LogOut();
             LoginPanel.Visibility = Visibility.Visible;
             ParametersPanel.Visibility = Visibility.Hidden;
+        }
+
+        private void GetCurrentPath_OnClick(object sender, RoutedEventArgs e)
+        {
+            Client.Instance.GetCurrentPath();
+        }
+
+        private void GoToDir_OnClick(object sender, RoutedEventArgs e)
+        {
+            if (GoToDirectoryTb.Text != String.Empty)
+            {
+                Client.Instance.CreateDirectory(GoToDirectoryTb.Text);
+                Client.Instance.Print(GoToDirectoryTb.Text);
+                BackButton.IsEnabled = true;
+                GoToDirectoryTb.Text = String.Empty;
+                backCounter++;
+                BackButton.IsEnabled = true;
+            }
+            else MessageBox.Show("Uzupełnij nazwę!", "Uwaga!");
+        }
+
+        private void BackButton_OnClick(object sender, RoutedEventArgs e)
+        {
+            if (backCounter == 0)
+                BackButton.IsEnabled = false;
+            else
+            {
+                backCounter--;
+                Client.Instance.PrevDir();
+            }
+            
+        }
+
+        private void ListCatalog_OnClick(object sender, RoutedEventArgs e)
+        {
+            Client.Instance.ViewTree();
         }
     }
 }

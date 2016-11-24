@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Net;
 using System.Net.Sockets;
 using System.Text;
@@ -166,6 +167,12 @@ namespace DruNet_WPF.Core
                 case 5:
                     CreateFile();
                     break;
+                case 6:
+                    path.CurrentPath = GetBackPath(path.CurrentPath);
+                    break;
+                case 7:
+                    GetCurrentPath();
+                    break;
                 case 0:
                     locker = 1;
                     package.Clear();
@@ -213,14 +220,29 @@ namespace DruNet_WPF.Core
                     tree += listdir[i] + "\n";
                 }
 
+                if (tree == null)
+                    tree = "Pusty katalog";
+
                 SendMsg(tree);
             }
             Print(tree);
         }
 
-        public void DeleteFile()
+        public string GetBackPath(string input)
         {
-            throw new NotImplementedException();
+            string result = String.Empty;
+            var splitted = input.Split('\\').ToList();
+
+            splitted.RemoveAt(splitted.Count - 1);
+
+            result = String.Join("\\", splitted.ToArray());
+
+            return result;
+        }
+
+        public void GetCurrentPath()
+        {
+            SendMsg(path.CurrentPath);
         }
 
         public void Start()
@@ -228,7 +250,6 @@ namespace DruNet_WPF.Core
             while (true)
             {
                 package.Clear();
-                //SendMsg(path.CurrentPath);
                 Switch();
             }
         }

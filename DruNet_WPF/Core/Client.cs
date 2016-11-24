@@ -132,13 +132,13 @@ namespace DruNet_WPF.Core
             else
             {
                 Send(2, dirName);
-                Print("Successfully created new directory: " + dirName);
                 Print("");
             }
         }
 
         public void ViewTree()
         {
+
             if (locker == 1)
             {
                 Print("You have no access! Please LogIn");
@@ -196,16 +196,38 @@ namespace DruNet_WPF.Core
             }
         }
 
-        public void GetPath()
-        {
-            path = ReceiveMsg();
-        }
-
         public void LogOut()
         {
             locker = 1;
             Send(0, " ");
             Print("Successfully logged out!");
         }
+
+        public void PrevDir()
+        {
+            if (locker == 1)
+            {
+                Print("You have no access! Please LogIn");
+            }
+            else
+            {
+                Send(6, " ");
+            }
+        }
+
+        public void GetCurrentPath()
+        {
+            if (locker == 1)
+            {
+                Print("You have no access! Please LogIn");
+            }
+            else
+            {
+                Send(7, " ");
+                Print(ReceiveMsg());
+                Print("");
+            }
+        }
+
     }
 }
