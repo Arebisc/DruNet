@@ -24,6 +24,7 @@ namespace DruNet_WPF.Views
     public partial class ClientPage : Page
     {
         private int backCounter = 0;
+        private string editigFileName = null;
 
         public ClientPage()
         {
@@ -127,6 +128,7 @@ namespace DruNet_WPF.Views
 
                 Client.Instance.CreateFile(fileWithContent[0], fileWithContent[1]);
                 ParameterTb.Text = String.Empty;
+                Client.Instance.Print("Successfully added file: " + fileWithContent[0]);
             }
             else MessageBox.Show("Uzupełnij nazwę!", "Uwaga!");
         }
@@ -182,6 +184,11 @@ namespace DruNet_WPF.Views
         private void ListCatalog_OnClick(object sender, RoutedEventArgs e)
         {
             Client.Instance.ViewTree();
+        }
+
+        private void EditFile_OnClick(object sender, RoutedEventArgs e)
+        {
+            CreateFile_OnClick(sender, e);
         }
     }
 }

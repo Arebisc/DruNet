@@ -161,12 +161,11 @@ namespace DruNet_WPF.Core
             {
                 Send(5, fileName);
                 Send(5, content);
-                Print("Successfully created new file: " + fileName);
                 Print("");
             }
         }
 
-        public void ReadFile(string message)
+        public void ReadFile(string fileName)
         {
             if (locker == 1)
             {
@@ -174,11 +173,25 @@ namespace DruNet_WPF.Core
             }
             else
             {
-                Console.WriteLine("Insert filename");
-                Send(4, message);
+                Send(4, fileName);
                 Print(ReceiveMsg());
                 Print("");
             }
+        }
+
+        public string ReturnReadedFileContent(string fileName)
+        {
+            if (locker == 1)
+            {
+                Print("You have no access! Please LogIn");
+            }
+            else
+            {
+                Send(4, fileName);
+                return ReceiveMsg();
+            }
+
+            return String.Empty;
         }
 
         //TODO

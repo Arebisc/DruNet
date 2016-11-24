@@ -39,6 +39,7 @@
                     <Button Content="Aktualna ścieżka" Click="GetCurrentPath_OnClick"/>
                     <Button Content="Cofnij do poprzedniego folderu" IsEnabled="False" Name="BackButton"  Click="BackButton_OnClick"/>
                     <Button Content="Listuj katalog" Click="ListCatalog_OnClick" />
+                    <Button Content="Edytuj plik" Click="EditFile_OnClick" />
                 </StackPanel>
                 <Button Content="Wyloguj" Click="Logout_OnClick" />
             </StackPanel>
