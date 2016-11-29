@@ -92,6 +92,7 @@ namespace DruNet_WPF.Core
             for (int i = 0; i < package.Count; i++)
             {
                 stream.WriteByte(package[i]);
+                stream.Flush();
             }
             message.Clear();
         }
